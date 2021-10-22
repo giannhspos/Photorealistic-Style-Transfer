@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+from PIL import Image
 
 def load_seg(content_seg_path, style_seg_path, content_shape, style_shape):
     color_codes = ['BLUE', 'GREEN', 'BLACK', 'WHITE', 'RED', 'YELLOW', 'GREY', 'LIGHT_BLUE', 'PURPLE']
