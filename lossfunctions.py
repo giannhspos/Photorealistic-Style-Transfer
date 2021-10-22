@@ -1,10 +1,21 @@
 import tensorflow as tf
 from read_images import content_layers, style_layers, num_content_layers, num_style_layers
 from Load_masks import load_seg
+import os
+import scipy.misc as spm
+import scipy.ndimage as spi
+import scipy.sparse as sps
 
 VGG_MEAN = [103.939, 116.779, 123.68]
 mean_pixel = tf.constant(VGG_MEAN)
 
+def gram_matrix(input_tensor):
+  result = tf.linalg.einsum('bijc,bijd->bcd', input_tensor, input_tensor)
+  input_shape = tf.shape(input_tensor)
+  
+  num_locations = tf.cast(input_shape[1]*input_shape[2], tf.float32)
+
+  return result
 def style_loss(style_layer, init_layer, content_seg, style_seg):
     gram_matrix_const = gram_matrix(tf.multiply(style_layer, style_seg))
     b, h, w, c = style_layer.get_shape()
@@ -13,7 +24,7 @@ def style_loss(style_layer, init_layer, content_seg, style_seg):
 
 
 def content_loss(base_content, target):
-    b, w, h, c = const_layer.get_shape()
+    b, w, h, c = target.get_shape()
     return tf.reduce_mean(tf.square(base_content - target))
 
 
