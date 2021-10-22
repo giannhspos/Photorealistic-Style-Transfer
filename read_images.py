@@ -4,6 +4,29 @@ import tensorflow as tf
 
 
 #convert images from RGB to BGR with zero centered(preprocess_for_VGG)"
+
+def load_img(path_to_img):
+
+
+  img = Image.open(path_to_img)
+  img = kp_image.img_to_array(img)
+
+  # We need to broadcast the image array such that it has a batch dimension 
+  img = np.expand_dims(img, axis=0)
+  
+
+  return img
+
+def imshow(img, title=None):
+  # Remove the batch dimension
+  out = np.squeeze(img, axis=0)
+  # Normalize for display 
+  out = out.astype('uint8')
+  plt.imshow(out)
+  if title is not None:
+    plt.title(title)
+  plt.imshow(out)
+  
 def load_and_process_img(path_to_img):
   img = Image.open(path_to_img)
   img= img.resize((512, 512), Image.ANTIALIAS)
