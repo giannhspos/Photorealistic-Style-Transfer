@@ -1,8 +1,7 @@
 import numpy as np
 from PIL import Image
 import tensorflow as tf
-
-
+from tensorflow.python.keras.preprocessing import image as kp_image
 
 
 def load_img(path_to_img):
