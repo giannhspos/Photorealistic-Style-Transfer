@@ -1,5 +1,6 @@
 import tensorflow as tf
 from read_images import content_layers, style_layers, num_content_layers, num_style_layers
+from Load_masks import load_seg
 
 VGG_MEAN = [103.939, 116.779, 123.68]
 mean_pixel = tf.constant(VGG_MEAN)
