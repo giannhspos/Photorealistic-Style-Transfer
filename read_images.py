@@ -3,7 +3,7 @@ from PIL import Image
 import tensorflow as tf
 
 
-#convert images from RGB to BGR with zero centered(preprocess_for_VGG)"
+
 
 def load_img(path_to_img):
 
@@ -26,7 +26,8 @@ def imshow(img, title=None):
   if title is not None:
     plt.title(title)
   plt.imshow(out)
-  
+
+#convert images from RGB to BGR with zero centered(preprocess_for_VGG)"
 def load_and_process_img(path_to_img):
   img = Image.open(path_to_img)
   img= img.resize((512, 512), Image.ANTIALIAS)
