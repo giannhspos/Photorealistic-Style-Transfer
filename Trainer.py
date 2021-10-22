@@ -45,7 +45,7 @@ def run_style_transfer(content_path,
   # Set initial image
   #init_image = load_and_process_img(init_path)
   init_image = np.random.randn(1, content_height, content_width, 3).astype(np.float32) * 0.0001
-  init_image = tf.Variable(init_image, dtype=tf.float32)]]]]]]
+  init_image = tf.Variable(init_image, dtype=tf.float32)
 
  
   # Create our optimizer
