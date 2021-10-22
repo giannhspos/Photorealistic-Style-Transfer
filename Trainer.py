@@ -6,14 +6,14 @@ from PIL import Image
 
 from Matting import getLaplacian
 from read_images import load_and_process_img, deprocess_img, content_layers, style_layers, num_content_layers, \
-    num_style_layers
+    num_style_layers,load_img
 from lossfunctions import compute_loss
 from Vgg19 import get_model
 
   
 def run_style_transfer(content_path, 
                        style_path,
-                       init_path,content_seg,style_seg,
+                       content_seg,style_seg,
                        num_iterations,
                        content_weight, 
                        style_weight,tv_weight,affine_weight): 
@@ -23,22 +23,24 @@ def run_style_transfer(content_path,
   for layer in model.layers:
     layer.trainable = False
  
+  
   style_image = load_and_process_img(style_path)
   content_image = load_and_process_img(content_path)
 
   content_width, content_height = content_image.shape[2], content_image.shape[1]
-
+  style_width, style_height = style_image.shape[2], style_image.shape[1]
   style_model_outputs = model(style_image)
   content_model_outputs = model(content_image)
   style_features = style_model_outputs[:num_style_layers]
   content_features = content_model_outputs[num_style_layers:]
   # Transformed input content image for photorealism regularization term
-  M = tf.compat.v1.to_float(getLaplacian(content_image / 255.))
-
+  content_img = load_img(content_path)
+  content_img = tf.squeeze(content_img,0)
+  M = tf.compat.v1.to_float(getLaplacian(content_img / 255.))
 
   #M = tf.compat.v1.to_float(getLaplacian(content_image / 255.))
   # Get the style and content feature representations (from our specified intermediate layers) 
-  style_features, content_features = get_feature_representations(model, content_path, style_path)
+  #style_features, content_features = get_feature_representations(model, content_path, style_path)
   #gram_style_features = [gram_matrix(style_feature) for style_feature in style_features]
   
   # Set initial image
