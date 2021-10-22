@@ -34,7 +34,6 @@ def run_style_transfer(content_path,
   style = tf.squeeze(style,0)
   style_width, style_height = style.shape[1], style.shape[0]
 
-  #style_features, content_features = get_feature_representations(model, content_path, style_path)
   style_image = load_and_process_img(style_path)
   content_image = load_and_process_img(content_path)
   style_model_outputs = model(style_image)
@@ -47,15 +46,8 @@ def run_style_transfer(content_path,
   #init_image = load_and_process_img(init_path)
   init_image = np.random.randn(1, content_height, content_width, 3).astype(np.float32) * 0.0001
   init_image = tf.Variable(init_image, dtype=tf.float32)]]]]]]
-  #M = tf.compat.v1.to_float(getLaplacian(content_image / 255.))
-  # Get the style and content feature representations (from our specified intermediate layers) 
-  #style_features, content_features = get_feature_representations(model, content_path, style_path)
-  #gram_style_features = [gram_matrix(style_feature) for style_feature in style_features]
-  
-  # Set initial image
-  #init_image = load_and_process_img(init_path)
-  init_image = np.random.randn(1, content_height, content_width, 3).astype(np.float32) * 0.0001
-  init_image = tf.Variable(init_image, dtype=tf.float32)
+
+ 
   # Create our optimizer
   learning_rate=1
   opt =tf.keras.optimizers.Adam(learning_rate)
