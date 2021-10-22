@@ -1,6 +1,8 @@
 import tensorflow as tf
 from read_images import content_layers, style_layers, num_content_layers, num_style_layers
 
+VGG_MEAN = [103.939, 116.779, 123.68]
+mean_pixel = tf.constant(VGG_MEAN)
 
 def style_loss(style_layer, init_layer, content_seg, style_seg):
     gram_matrix_const = gram_matrix(tf.multiply(style_layer, style_seg))
