@@ -24,20 +24,29 @@ def run_style_transfer(content_path,
     layer.trainable = False
  
   
+  content = load_img(content_path)
+  content = tf.squeeze(content,0)
+  M = tf.compat.v1.to_float(getLaplacian(content_img / 255.))
+
+  content_width, content_height = content.shape[1], content.shape[0]
+    
+  style = load_img(style_path)
+  style = tf.squeeze(style,0)
+  style_width, style_height = style.shape[1], style.shape[0]
+
+  #style_features, content_features = get_feature_representations(model, content_path, style_path)
   style_image = load_and_process_img(style_path)
   content_image = load_and_process_img(content_path)
-
-  content_width, content_height = content_image.shape[2], content_image.shape[1]
-  style_width, style_height = style_image.shape[2], style_image.shape[1]
   style_model_outputs = model(style_image)
   content_model_outputs = model(content_image)
   style_features = style_model_outputs[:num_style_layers]
   content_features = content_model_outputs[num_style_layers:]
-  # Transformed input content image for photorealism regularization term
-  content_img = load_img(content_path)
-  content_img = tf.squeeze(content_img,0)
-  M = tf.compat.v1.to_float(getLaplacian(content_img / 255.))
 
+  
+  # Set initial image
+  #init_image = load_and_process_img(init_path)
+  init_image = np.random.randn(1, content_height, content_width, 3).astype(np.float32) * 0.0001
+  init_image = tf.Variable(init_image, dtype=tf.float32)]]]]]]
   #M = tf.compat.v1.to_float(getLaplacian(content_image / 255.))
   # Get the style and content feature representations (from our specified intermediate layers) 
   #style_features, content_features = get_feature_representations(model, content_path, style_path)
