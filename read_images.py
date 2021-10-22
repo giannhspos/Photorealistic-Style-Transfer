@@ -29,7 +29,6 @@ def imshow(img, title=None):
 #convert images from RGB to BGR with zero centered(preprocess_for_VGG)"
 def load_and_process_img(path_to_img):
   img = Image.open(path_to_img)
-  img= img.resize((512, 512), Image.ANTIALIAS)
   img = np.expand_dims(img, axis=0)
   img = tf.keras.applications.vgg19.preprocess_input(img)
   return img
